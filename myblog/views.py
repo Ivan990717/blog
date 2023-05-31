@@ -20,6 +20,7 @@ def register(request):
             user_obj = UserInfo.objects.create_user(username=user,password=pwd,email=email,avatar=ava)
             # avatar = ava :上传了一个对象，然后下载到了项目的根目录，avatar存的是文件的路径
 
+
         else:
             res["msg"] = form.errors
         return JsonResponse(res)

@@ -134,3 +134,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+#media用作用户上传文件，上传的头像将不再存到avatar目录下
+MEDIA_URL = "/media/"
