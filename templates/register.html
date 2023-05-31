@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/blog/bs/css/bootstrap.css">
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h3 align="center">注册页面</h3>
+<div class = "container">
+    <div class = "col-md-6 col-lg-offset-3">
+        <form id="form">
+                {% csrf_token %}
+                {#post请求一定要经过csrf校验#}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        {#把for="{user}"改成for="{{ field.auto_id }}"可以将label的class和{{ filed }}#}
+                        {#里面的id值相同#}
+                        {{ field }} <span class="error pull-right"></span>
+                    </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <label for="avatar">
+                        头像
+                        <img id="avatar_img" width="60" height="60" src="/static/blog/img/default.png" alt="">
+                    </label>
+                    <input type="file" id="avatar" name="avatar" style="display: None">
+                </div>
+
+                <input type="button" class="btn btn-default reg_btn" value="submit"><span class="error"></span>
+
+            </form>
+    </div>
+</div>
+</body>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script>
+    $("#avatar").change(function () {
+        //获取文件
+        file_obj = $("#avatar")[0].files[0];
+        //获取文件路径
+        reader = new FileReader();
+        reader.readAsDataURL(file_obj);
+        reader.onload = function() {
+            $("#avatar_img").attr("src",reader.result) //src此时变成了unknown，所以需要window.onload把所有操作结束再修改
+        }
+
+    })
+</script>
+<script>
+    $(".reg_btn").click(function () {
+        var formdata = new FormData();
+        {#formdata.append("user",$("#id_user").val());#}
+        {#formdata.append("pwd",$("#id_pwd").val());#}
+        {#formdata.append("re_pwd",$("#re_pwd").val());#}
+        {#formdata.append("email",$("#id_email").val());#}
+        {#formdata.append("avatar",$("#avatar")[0].files[0]);#}
+        {#formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());//某则会爆403 forbiden错误#}
+        var formlist = $("#form").serializeArray();
+        $.each(formlist,function (index,data) {
+            formdata.append(data.name,data.value)
+        })
+        formdata.append("avatar",$("#avatar")[0].files[0]);
+
+
+        $.ajax({
+            url: "",
+            type: "post",
+            contentType: false,
+            processData: false,
+            data: formdata,
+
+            success: function (data) {
+                console.log(data);
+                location.href = "/login"
+                if (data.user){
+
+                }
+                else{
+                    $("span.error").html("");//清空错误信息
+                    $("form-group").removeClass("has-error");
+                    $.each(data.msg,function (field,errorlist) {
+                        if (field == "__all__"){
+                            $("#id_re_pwd").next().html(errorlist[0])
+                            //  密码不一致错误放在第二栏
+                        }
+                        $("#id_"+field).next().html(errorlist[0]);
+                        $("#id_"+field).next().parent().addClass("has-error");//错误框变红
+                        //This field is required.
+
+                    })
+                }
+                }
+
+        })
+    })
+</script>
+</html>
