@@ -25,6 +25,8 @@ urlpatterns = [
     path('login/',views.login),
     path('get_validCode_img/',views.get_vaildCode_img),
     path('index/',views.index),
+    path('logout/',views.log_out),
+    re_path('^$',views.index), # 默认首页是index
     path('register/',views.register),
     #media配置
     re_path(r"media/(?P<path>.*)$",serve,{"document_root":MEDIA_ROOT})
