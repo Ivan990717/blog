@@ -11,6 +11,17 @@
             margin-right: 10px;
             vertical-align: -1px;
         }
+        .navbar{
+            background:skyblue;
+        }
+        .pub_info{
+            margin-top: 10px;
+        }
+        .glyphicon{
+            margin-top: -5px;
+
+        }
+
     </style>
 </head>
 <body>
@@ -57,6 +68,77 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-success">
+                  <div class="panel-heading">Panel heading without title</div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+                <div class="panel panel-warning">
+                  <div class="panel-heading">Panel heading without title</div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+                <div class="panel panel-info">
+                  <div class="panel-heading">Panel heading without title</div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="article_list">
+                    {% for article in article_list %}
+                        <div class="article_item">
+                        <h5>
+                            <a href="">{{ article.title }}</a>
+                        </h5>
+                        <div class="article_desc">
+                            <span class="media-left">
+                                <a href=""><img width="50" height="50" src="media/{{ article.user.avatar }}" alt=""></a>
+                            </span>
+                            <span class="media-right">
+                                {{ article.desc }}
+                            </span>
+                        </div>
+                        </div>
+                        <div class="small pub_info">
+                        <span>
+                        <a href="">作者：{{ article.user.username }}</a></span>&nbsp;&nbsp;
+                         <span class="glyphicon glyphicon-time">
+                        <a href="" ></a>
+                        </span>发布于：{{ article.create_time|date:"Y-m-d H:i" }}&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-comment">
+                            <a href="" ></a>
+                        </span>评论：{{ article.comment_count }}&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-thumbs-up">
+                            <a href="" ></a>
+                        </span>点赞：{{ article.up_count }}</div>&nbsp;&nbsp;
+                        <hr>
+
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Panel heading without title</div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+                <div class="panel panel-danger">
+                  <div class="panel-heading">Panel heading without title</div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
 

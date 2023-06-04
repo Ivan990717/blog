@@ -2,12 +2,14 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.contrib import auth
 from myblog.form_ import UserForm
-from myblog.models import UserInfo
+from myblog.models import *
 
 
 # 先导系统模块，然后导入第三方插件，之后导入自定义模块
 def index(request):
-    return render(request, "index.html")
+    article_list = Article.objects.all()
+
+    return render(request, "index.html",{"article_list":article_list})
 
 def log_out(request):
     auth.logout(request) # 等同于request.session.flush() 删掉了存储信息
