@@ -2,9 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/blog/bs/css/bootstrap.css">
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
     <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 60px;
+            background-color: #9acfea;
+        }
+        .header .title{
+            font-size: 24px;
+            font-weight: 100;
+            line-height: 60px;
+            color: #000000;
+            margin-left: 15px;
+            margin-top: -10px;
+        }
+        .backend{
+            float: right;
+            font-size: 14px;
+            margin-right: 10px;
+            border: 1px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #3c3c3c;
+        }
+         .pub_info{
+            margin-top: 10px;
+            color: green;
+        }
+    </style>
 </head>
 <body>
+{#<ul class="nav nav-pills">#}
+{#  <li role="presentation" class="active"><a href="#">Home</a></li>#}
+{#  <li role="presentation"><a href="#">Profile</a></li>#}
+{#  <li role="presentation"><a href="#">Messages</a></li>#}
+{#</ul>#}
+<div class="header">
+    <div class="content">
+        <p class="title active" role="presentation" ><span>{{ blog.title }}
+        </span>
+            <a href="" class="backend" role="presentation">管理</a>
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">我的标签</h3>
+              </div>
+              <div class="panel-body">
+                {% for tag in tag_list %}
+                    <p>{{ tag.0 }}:&nbsp;{{ tag.1 }}</p>
+                {% endfor %}
+              </div>
 
+            </div>
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h3 class="panel-title">随笔分类</h3>
+              </div>
+              <div class="panel-body">
+                {% for cate in cate_list %}
+                    <p>{{ cate.0 }}:&nbsp;{{ cate.1 }}</p>
+                {% endfor %}
+              </div>
+
+            </div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">随笔归档</h3>
+              </div>
+              <div class="panel-body">
+                {% for date in date_list %}
+                    <p>{{ date.0 }}:&nbsp;{{ date.1 }}</p>
+                {% endfor %}
+              </div>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="article_list">
+                    {% for article in article_list %}
+                        <div class="article_item clearfix">
+                        <h5>
+                            <a href="">{{ article.title }}</a>
+                        </h5>
+                        <div class="article_desc">
+
+                            <span class="media-right">
+                                {{ article.desc }}
+                            </span>
+                        </div>
+                        </div>
+                        <div class="small pub_info pull-right">
+
+                         <span class="glyphicon glyphicon-time">
+                        <a href="" ></a>
+                        </span>发布于：{{ article.create_time|date:"Y-m-d H:i" }}&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-comment">
+                            <a href="" ></a>
+                        </span>评论：{{ article.comment_count }}&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-thumbs-up">
+                            <a href="" ></a>
+                        </span>点赞：{{ article.up_count }}</div>&nbsp;&nbsp;
+                        <hr>
+
+                    {% endfor %}
+                </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

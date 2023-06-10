@@ -108,8 +108,9 @@ def home_site(request,username):
     # 查询当前站点的每一个标签及对应的文章数
     tag_list = Tag.objects.filter(blog=blogs).values("pk").annotate(c=Count("article")).values_list("title","c")
     # 查询当前站点的每一个月的名称及对应的文章数
-    ret=Article.objects.extra(select={"is_recent":"create_time > '2022-09-05'"}).values("title","is_recent")
+    ret=Article.objects.extra(select={"is_recent":"create_time > '2022-09-05'"}).values_list("title","is_recent")
     print(ret) # <QuerySet [{'is_recent': 1, 'title': '这个冬天不太冷'}]>
+
     """
     日期归档查询
     create table t_mul_new(d date,t time,dt datetime);
@@ -135,7 +136,11 @@ def home_site(request,username):
     """
     # print(Article.objects.extra(select = {"is_recent":"create_time > '2022-09-05'"}).values("title","is_recent"))
 
-    # res = Article.objects.filter(user=user).extra(select={"y_m_date":"date_format(create_time,'%%Y-%%m-%%d')"}).values("y_m_date").annotate(c = Count("nid")).values("y_m_date","c")
+    #date_list = Article.objects.filter(user=user).extra(select={"y_m_date":"date_format(create_time,'%%Y-%%m-%%d')"}).values("y_m_date").annotate(c = Count("nid")).values_list("y_m_date","c")
+    date_list = Article.objects.filter(user=user).extra(select={"y_m_date":"date_format(create_time,'%%Y-%%m')"}).values("y_m_date").annotate(c = Count("nid")).values_list("y_m_date","c")
+    """
+    时间归档格式要注意一下
+    """
     # <QuerySet [{'y_m_date': '2023-06-04', 'c': 1}, {'y_m_date': '2023-06-10', 'c': 1}]>
 
 
@@ -143,11 +148,17 @@ def home_site(request,username):
     django中的日期归档查询
     """
     from django.db.models.functions import TruncMonth #截断到月份
-    print(Article.objects.filter(user=user).annotate(month=TruncMonth("create_time")).values("month").annotate(c=Count("nid")).values_list("month","c"))
+    date= Article.objects.filter(user=user).annotate(month=TruncMonth("create_time")).values("month").annotate(c=Count("nid")).values_list("month","c")
     # <QuerySet [(datetime.datetime(2023, 6, 1, 0, 0), 2)]>
 
+    list_ = {
+        "blog":blogs,
+        "article_list":articles,
+        "tag_list": tag_list,
+        "cate_list": cate_list,
+        "date_list":date_list
+    }
+    print(list_)
 
 
-
-
-    return render(request,"home_site.html")
+    return render(request,"home_site.html",list_)
