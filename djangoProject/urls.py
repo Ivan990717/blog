@@ -29,5 +29,8 @@ urlpatterns = [
     re_path('^$',views.index), # 默认首页是index
     path('register/',views.register),
     #media配置
-    re_path(r"media/(?P<path>.*)$",serve,{"document_root":MEDIA_ROOT})
+    re_path(r"media/(?P<path>.*)$",serve,{"document_root":MEDIA_ROOT}),
+
+    # 配置个人站点
+    re_path('^(?P<username>\w+)$',views.home_site)
 ]
