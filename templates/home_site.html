@@ -61,7 +61,7 @@
               </div>
               <div class="panel-body">
                 {% for tag in tag_list %}
-                    <p>{{ tag.0 }}:&nbsp;{{ tag.1 }}</p>
+                    <p><a href="/{{ username }}/tag/{{ tag.0 }}">{{ tag.0 }}:&nbsp;{{ tag.1 }}</a></p>
                 {% endfor %}
               </div>
 
@@ -72,7 +72,7 @@
               </div>
               <div class="panel-body">
                 {% for cate in cate_list %}
-                    <p>{{ cate.0 }}:&nbsp;{{ cate.1 }}</p>
+                    <p><a href="/{{ username }}/category/{{ cate.0 }}">{{ cate.0 }}:&nbsp;{{ cate.1 }}</a></p>
                 {% endfor %}
               </div>
 
@@ -83,7 +83,7 @@
               </div>
               <div class="panel-body">
                 {% for date in date_list %}
-                    <p>{{ date.0 }}:&nbsp;{{ date.1 }}</p>
+                    <p><a href="/{{ username }}/archive/{{ date.0 }}">{{ date.0 }}:&nbsp;{{ date.1 }}</a></p>
                 {% endfor %}
               </div>
 

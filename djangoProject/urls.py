@@ -32,5 +32,11 @@ urlpatterns = [
     re_path(r"media/(?P<path>.*)$",serve,{"document_root":MEDIA_ROOT}),
 
     # 配置个人站点
-    re_path('^(?P<username>\w+)$',views.home_site)
-]
+    re_path('^(?P<username>\w+)$',views.home_site), # 个人主页
+    # views.home_site(request,username)
+    # re_path('^(?P<username>\w+)/tag/.*/$',views.home_site),
+    # re_path('^(?P<username>\w+)/category/.*/$',views.home_site),
+    # re_path('^(?P<username>\w+)/archive/.*/$',views.home_site)
+    re_path('^(?P<username>\w+)/(?P<condition>tag|category|archive)/(?P<param>.*)/$',views.home_site)
+    # views.home_site(request,username,condition = "category",params = "****")
+    ]

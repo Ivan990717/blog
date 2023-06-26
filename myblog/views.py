@@ -81,19 +81,35 @@ def get_vaildCode_img(request):
     return HttpResponse(data)
 
 
-def home_site(request,username):
+def home_site(request,username, **kwargs):
     """
     个人站点生成
     :param request:
     :param username:
+    :param kwargs: 如果有值，可以跳转到分类下面
     :return:
     """
+
     user = UserInfo.objects.filter(username = username).first()
     if not user:
         return render(request,"notfound.html")
     # 当前用户对应的所有文章
     blogs = user.blog
-    articles = user.article_set.all()
+    articles = Article.objects.filter(user = user)
+    # articles = user.article_set.all()
+    if kwargs:
+        print(kwargs)
+        condition = kwargs.get("condition")
+        params = kwargs.get("param")
+        if condition == "category":
+            articles = Article.objects.filter(user = user).filter(category__title=params)
+        elif condition == "tag":
+            articles = Article.objects.filter(user = user).filter(tags__title=params)
+        elif condition == "archive":
+            year,month = params.split("-")
+            articles = Article.objects.filter(user = user).filter(create_time__month=month,create_time__year=year)
+
+
 
     # 基于__方法: Article.objects.filter(user = user)
 

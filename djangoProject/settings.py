@@ -120,7 +120,7 @@ TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = False # 不转时区
 
 AUTH_USER_MODEL="myblog.UserInfo"
 # Static files (CSS, JavaScript, Images)
