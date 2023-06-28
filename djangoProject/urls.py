@@ -37,6 +37,7 @@ urlpatterns = [
     # re_path('^(?P<username>\w+)/tag/.*/$',views.home_site),
     # re_path('^(?P<username>\w+)/category/.*/$',views.home_site),
     # re_path('^(?P<username>\w+)/archive/.*/$',views.home_site)
+    re_path('^(?P<username>\w+)/articles/(?P<article_id>\d+)$',views.article_detail),
     re_path('^(?P<username>\w+)/(?P<condition>tag|category|archive)/(?P<param>.*)/$',views.home_site)
     # views.home_site(request,username,condition = "category",params = "****")
     ]
