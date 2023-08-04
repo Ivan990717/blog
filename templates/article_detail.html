@@ -1,1 +1,10 @@
 {% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="text-center">{{ article_obj.title }}</h3>
+    <div class="cont">
+        {{ article_obj.content | safe }}
+{#     加入safe可以拿掉对标签的转义#}
+    </div>
+
+{% endblock %}
